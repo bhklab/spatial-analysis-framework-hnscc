@@ -1,4 +1,4 @@
-# Spatial_Analysis_HNSCC_Framework
+# Spatial Analysis HNSCC Framework
 
 **Authors:** [Gregoire Marret](https://github.com/gmarret), [Jinsu An](https://github.com/Jinsuan-UofC), [Farnoosh Abbas Aghababazadeh](https://github.com/RibaA)
 
