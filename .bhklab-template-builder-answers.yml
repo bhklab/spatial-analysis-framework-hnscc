@@ -1,0 +1,14 @@
+# Changes here will be overwritten by Copier
+_commit: 0.14.2
+_src_path: gh:bhklab/bhklab-project-template
+author_email: bhklab.farnooshabbasaghababazadeh@gmail.com
+author_full_name: Farnoosh Abbas Aghababazadeh
+github_username: RibaA
+has_additional_authors: false
+project_description: A Spatial Analysis Framework for Head and Neck Squamous Cell
+    Carcinoma
+project_name: Spatial_Analysis_HNSCC_Framework
+project_slug: spatial-analysis-framework-hnscc
+publish_to_github: true
+python_version: '3.12'
+repo_location: bhklab
