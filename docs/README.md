@@ -3,7 +3,7 @@
 **Authors:** [Gregoire Marret](https://github.com/gmarret), [Jinsu An](https://github.com/Jinsuan-UofC), [Farnoosh Abbas Aghababazadeh](https://github.com/RibaA)
 
 
-**Contact:** [gregoire.marret@uhn.ca](gregoire.marret@uhn.ca)
+**Contact:** [gregoire.marret@uhn.ca](gregoire.marret@uhn.ca), [jinsu.an@ucalgary.ca](jinsu.an@ucalgary.ca), [farnoosh.abbasaghababazadeh@uhn.ca](farnoosh.abbasaghababazadeh@uhn.ca)
 
 **Description:** A Spatial Analysis Framework for Head and Neck Squamous Cell Carcinoma
 
