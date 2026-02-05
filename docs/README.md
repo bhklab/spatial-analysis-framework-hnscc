@@ -40,8 +40,8 @@ If you haven't installed it yet, [follow these instructions](https://pixi.sh/lat
 
 ```bash
 # Clone the repository
-git clone https://github.com/bhklab/predictio-uv-dist.git
-cd predictio-uv-dist
+git clone https://github.com/bhklab/spatial-analysis-framework-hnscc.git
+cd spatial-analysis-framework-hnscc
 
 # Install dependencies via Pixi
 pixi install
