@@ -7,6 +7,8 @@
 
 **Description:** A Spatial Analysis Framework for Head and Neck Squamous Cell Carcinoma
 
+This repository contains computational workflows for analyzing spatial transcriptomics data from recurrent/metastatic head and neck squamous cell carcinoma (RM-HNSCC). The analyses characterize spatial tumor–immune–stromal organization, infer cell–cell communication, and derive spatially informed gene expression signatures that predict response to immune checkpoint blockade across cancer types.
+
 --------------------------------------
 
 [![pixi-badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/prefix-dev/pixi/main/assets/badge/v0.json&style=flat-square)](https://github.com/prefix-dev/pixi)
@@ -19,6 +21,14 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/bhklab/spatial-analysis-framework-hnscc?style=flat-square)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/bhklab/spatial-analysis-framework-hnscc?style=flat-square)
 
+## Project Overview
+
+This repository implements ....
+
+- **Reproducibility**: modular pipeline using **Pixi**, **Python**, and **R**
+
+---
+
 ## Set Up
 
 ### Prerequisites
@@ -28,14 +38,34 @@ If you haven't installed it yet, [follow these instructions](https://pixi.sh/lat
 
 ### Installation
 
-1. Clone this repository to your local machine
-2. Navigate to the project directory
-3. Set up the environment using Pixi:
-
 ```bash
+# Clone the repository
+git clone https://github.com/bhklab/predictio-uv-dist.git
+cd predictio-uv-dist
+
+# Install dependencies via Pixi
 pixi install
 ```
 
+## Repository Structure
+
+```
+predictio-uv-dist/
+├── config/           # YAML config files for each dataset and center
+├── data/             # Raw, processed, and results directories
+├── workflow/         # Scripts for analysis
+├── docs/             # MkDocs-based project documentation
+│   └── README.md     # Documentation index and setup instructions
+└── pixi.toml         # Pixi environment specification
+```
+
+---
+
 ## Documentation
 
-Click [here](https://bhklab.github.io/spatial-analysis-framework-hnscc) to view the full documentation.
+Full documentation, including usage instructions, data setup, config templates, and pipeline stages, will be available in the `docs/` folder or via published GitHub Pages.
+
+Start by downloading and organizing the raw input datasets as described in [`data/rawdata/README.md`](https://github.com/bhklab/spatial-analysis-framework-hnscc/blob/main/data/rawdata/README.md).
+
+For data download and processing, please refer to the univariable repository:  
+🔗 [https://github.com/bhklab/spatial-analysis-framework-hnscc?tab=readme-ov-file](https://github.com/bhklab/spatial-analysis-framework-hnscc?tab=readme-ov-file)
