@@ -2,33 +2,110 @@
 
 ## Purpose
 
-This directory is for storing **immutable raw data files** that serve as the original source data for your project. Raw data should never be modified after being placed here.
+This directory is reserved for **immutable raw data** files used in the spatial transcriptomics analyses presented in this study.
+Raw data are **not tracked in this repository** due to patient privacy, consent restrictions, and data-sharing agreements.
 
-## IMPORTANT: Documentation Requirement
+All analyses in this repository assume that raw data have been obtained separately and placed in user-defined local paths.
 
-**EVERY TIME** you add data to this directory, you **MUST** document it in `docs/data_sources.md`. This documentation is critical for:
+---
 
-- Ensuring transparency in data acquisition
-- Allowing others to reproduce your work
-- Tracking data provenance and versioning
-- Understanding special processing requirements or limitations
+## Data Access Instructions
 
-## Git Synchronization Notice
+**No raw data files are included in this repository.**  
+Access to raw data depends on the dataset type and is governed by ethical approvals and data-use agreements.
 
-**⚠️ FILES IN THIS DIRECTORY ARE NOT SYNCHRONIZED WITH GIT ⚠️**
+This study integrates private spatial transcriptomics data and public/priavte bulk RNA-seq datasets along with gene expression immuno-oncology signatures for external validation.
 
-Raw data files are typically large and should not be stored in version control. Instead:
+## Spatial Transcriptomics Data (Discovery Cohort)
 
-- Only the directory structure and this README are tracked
-- You are responsible for backing up your data appropriately
-- Consider using symbolic links to reference data from your project directories
+### INSPIRE and IO-KIN Clinical Trials
 
-## README Requirements for Data Subdirectories
+Spatial transcriptomic profiling was performed on tumor biopsies from immune checkpoint blockade (ICB)–naïve patients with recurrent or metastatic head and neck squamous cell carcinoma (RM-HNSCC) enrolled in two investigator-initiated phase II trials:
 
-When creating subdirectories, and possibly adding files here for your project,
-**YOU MUST** add a section to the `docs/data_sources.md` file that will help
-document the data you used and where it came from.
+- **INSPIRE** [NCT02644369](https://clinicaltrials.gov/study/NCT02644369)
+- **IO-KIN** [NCT04606940](https://clinicaltrials.gov/study/NCT04606940)
 
-See the `docs/data_sources.md` file for more details and examples.
+**Data type**
 
-Remember that proper data management is essential for research reproducibility and collaboration!
+- 10x Genomics Visium spatial transcriptomics from FFPE tissue sections (10 μm)
+
+- Cell Ranger–generated outputs including gene expression matrices, spatial coordinates, and histology images
+
+**Access**
+
+- Data are not publicly available due to patient privacy and institutional restrictions
+
+- Access requires institutional approval and appropriate data-sharing agreements; interested users should contact the corresponding authors
+
+
+## Single-Cell RNA-seq Reference Datasets
+
+Public single-cell RNA-seq datasets were used exclusively as reference atlases for spatial deconvolution and cell-type annotation.
+
+**Referenced datasets**
+
+- [GSE181919](https://pubmed.ncbi.nlm.nih.gov/36828832/)
+- [GSE182227](https://pubmed.ncbi.nlm.nih.gov/37012457/)
+- [GSE188737](https://pubmed.ncbi.nlm.nih.gov/36973261/)
+
+**Data type**
+
+- Whole-transcriptome single-cell RNA-seq and publicly available via GEO
+
+These datasets are not redistributed in this repository and must be downloaded directly from their original sources.
+
+## Bulk RNA-seq Data (External Validation Cohorts)
+
+To evaluate generalizability of spatially informed signatures, bulk RNA-seq datasets from multiple immune checkpoint blockade (ICB) cohorts were analyzed.
+
+### ORCESTRA Platform
+
+All raw datasets used in this pipeline are hosted on [**ORCESTRA**](https://www.orcestra.ca/clinical_icb), a reproducible biomedical data platform.
+
+Please download the dataset using the following curated release:
+
+➡️ **https://www.orcestra.ca/clinical_icb/62f29e85be1b2e72a9c177f4**
+
+This dataset includes:
+- Pre-treatment normalized RNA-seq expression data (TPM)
+- Clinical annotations for immune checkpoint blockade (ICB) studies
+- Associated metadata and processing documentation
+
+Only a subset of cohorts from ORCESTRA was included, based on predefined inclusion criteri. 
+
+---
+
+### Gene Signature Resources
+
+Gene expression signatures used for scoring, enrichment, and benchmarking were obtained from publicly available resources:
+
+You can access these signatures via:
+
+- **IO Signatures** — [bhklab/SignatureSets](https://github.com/bhklab/SignatureSets)  
+
+Each signature is:
+- Annotated with source publication
+- Categorized (e.g., sensitive, resistant)
+- Used for GSVA, weighted mean, ssGSEA, or specific method scoring
+
+---
+
+## Inclusion & Exclusion Criteria (Bulk Validation Cohorts)
+
+Raw datasets and gene signatures were selected based on:
+
+- Availability of pre-treatment RNA-seq data
+- Available clinical outcomes (PFS and/or objective response)
+- PD-1 or PD-L1 monotherapy
+- Sufficient sample size per cohort
+
+Refer to the **Materials and Methods** section of the manuscript for detailed criteria.
+
+---
+
+## Additional Notes
+
+- No preprocessing or normalization is performed directly on raw data within this repository.
+- All downstream processing occurs in analysis-specific scripts and intermediate data directories.
+- Users are responsible for complying with all original data-use agreements and ethical approvals.
+- This directory is **read-only** during pipeline execution. All transformations are done downstream in `data/procdata/`.
