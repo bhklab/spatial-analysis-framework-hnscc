@@ -47,7 +47,13 @@ Only cohorts meeting predefined inclusion criteria were used.
 
 #### Private Validation Datasets
 
-TO BE DDED
+In addition to publicly available cohorts, selected private bulk RNA-seq datasets were used for external validation of spatially informed gene expression signatures.
+
+- **Data type**: Pre-treatment whole-transcriptome bulk RNA-seq with associated clinical outcome annotations
+- **Source**: Institutional and collaborative immunotherapy cohorts not publicly released
+- **Access**: Restricted under institutional review board (IRB) approvals and data-sharing agreements
+
+These datasets were processed and analyzed using the same harmonization, normalization, and scoring procedures applied to public validation cohorts. Due to patient privacy and consent restrictions, raw data are not redistributed in this repository.
 
 ### Gene Signature Resources
 
@@ -64,6 +70,8 @@ Signatures were applied using rank-based, enrichment-based, or weighted scoring 
 ---
 
 ## Key Clinical Variables
+
+Clinical annotations were harmonized across datasets when applicable. Key variables include:
 
 | Variable            | Description                                       | Format   | Example      |
 |---------------------|---------------------------------------------------|----------|--------------|
