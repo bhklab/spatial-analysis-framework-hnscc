@@ -62,7 +62,7 @@ This script:
 - Saves the result as a `.rda` file for downstream analysis
 
 ➡️ Alternatively, you can use a precompiled `.rda` file from Zenodo:  
-[Zenodo DOI: 10.5281/zenodo.15832651](https://zenodo.org/records/15832652)
+[Zenodo DOI: XXXX](https://zenodo.org/records/XXXX)
 
 ---
 
@@ -160,7 +160,7 @@ This script:
 - Saves the result as a `.rda` file for downstream analysis
 
 ➡️ Alternatively, you can use a precompiled `.rda` file from Zenodo:  
-[Zenodo DOI: XXXX](https://zenodo.org/records/15832652)
+[Zenodo DOI: XXXX](https://zenodo.org/records/XXXXX)
 
 ---
 
@@ -214,10 +214,3 @@ This cancer-type harmonization enables consistent aggregation and comparison acr
 
 ---
 
-## Create Train Set Files
-
-Once all processed `.rda` files are ready, use the following R script to generate training feature matrices:
-
-```bash
-workflow/scripts/Create_train_set.r
-```
