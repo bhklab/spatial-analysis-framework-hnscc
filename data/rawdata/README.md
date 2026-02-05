@@ -99,6 +99,8 @@ Raw datasets and gene signatures were selected based on:
 - PD-1 or PD-L1 monotherapy
 - Sufficient sample size per cohort
 
+Datasets were excluded if they were generated using targeted gene panels, involved combination therapy regimens, consisted only of post-treatment samples, or lacked sufficient clinical annotation.
+
 Refer to the **Materials and Methods** section of the manuscript for detailed criteria.
 
 ---
