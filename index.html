@@ -110,9 +110,21 @@
 <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/bhklab/spatial-analysis-framework-hnscc?style=flat-square" />
 <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/bhklab/spatial-analysis-framework-hnscc?style=flat-square" /></p>
 <h2 id="project-overview">Project Overview</h2>
-<p>This repository implements ....</p>
+<p>This repository serves as the computational companion to a spatial transcriptomics study of RM-HNSCC treated with immune checkpoint blockade. It implements the analytical workflow underlying the manuscript, organizing the full sequence of computational steps required to reproduce the reported results given appropriate data access.</p>
+<p>The framework supports:</p>
 <ul>
-<li><strong>Reproducibility</strong>: modular pipeline using <strong>Pixi</strong>, <strong>Python</strong>, and <strong>R</strong></li>
+<li>preprocessing, integration, and quality control of spatial transcriptomics data;</li>
+<li>annotation of malignant and non-malignant compartments using orthogonal approaches;</li>
+<li>modeling of spatial neighborhoods and intercellular communication;</li>
+<li>extraction of spatial tumor–microenvironment features; and</li>
+<li>translation of spatial features into gene expression signatures validated in external bulk RNA-seq cohorts.</li>
+</ul>
+<p>All analyses are implemented as modular, configurable scripts designed for transparency, reproducibility, and extensibility. Protected patient-level data are not distributed in this repository; however, all code required to reproduce the analyses is provided.</p>
+<p><strong>Reproducibility</strong></p>
+<ul>
+<li>Modular pipeline implemented in <strong>R</strong> and <strong>Python</strong></li>
+<li>Dependency management via <strong>Pixi</strong></li>
+<li>Configuration-driven execution to support multiple cohorts and analyses</li>
 </ul>
 <hr />
 <h2 id="set-up">Set Up</h2>
@@ -128,7 +140,7 @@ cd spatial-analysis-framework-hnscc
 pixi install
 </code></pre>
 <h2 id="repository-structure">Repository Structure</h2>
-<pre><code>predictio-uv-dist/
+<pre><code>spatial-analysis-framework-hnscc/
 ├── config/           # YAML config files for each dataset and center
 ├── data/             # Raw, processed, and results directories
 ├── workflow/         # Scripts for analysis
@@ -194,5 +206,5 @@ pixi install
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2026-02-05 20:30:37.534627+00:00
+Build Date UTC : 2026-02-05 20:43:29.896856+00:00
 -->
