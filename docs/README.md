@@ -23,9 +23,23 @@ This repository contains computational workflows for analyzing spatial transcrip
 
 ## Project Overview
 
-This repository implements ....
+This repository serves as the computational companion to a spatial transcriptomics study of RM-HNSCC treated with immune checkpoint blockade. It implements the analytical workflow underlying the manuscript, organizing the full sequence of computational steps required to reproduce the reported results given appropriate data access.
 
-- **Reproducibility**: modular pipeline using **Pixi**, **Python**, and **R**
+The framework supports:
+
+- preprocessing, integration, and quality control of spatial transcriptomics data;
+- annotation of malignant and non-malignant compartments using orthogonal approaches;
+- modeling of spatial neighborhoods and intercellular communication;
+- extraction of spatial tumor–microenvironment features; and
+- translation of spatial features into gene expression signatures validated in external bulk RNA-seq cohorts.
+
+All analyses are implemented as modular, configurable scripts designed for transparency, reproducibility, and extensibility. Protected patient-level data are not distributed in this repository; however, all code required to reproduce the analyses is provided.
+
+**Reproducibility**
+
+- Modular pipeline implemented in **R** and **Python**
+- Dependency management via **Pixi**
+- Configuration-driven execution to support multiple cohorts and analyses
 
 ---
 
@@ -50,7 +64,7 @@ pixi install
 ## Repository Structure
 
 ```
-predictio-uv-dist/
+spatial-analysis-framework-hnscc/
 ├── config/           # YAML config files for each dataset and center
 ├── data/             # Raw, processed, and results directories
 ├── workflow/         # Scripts for analysis
