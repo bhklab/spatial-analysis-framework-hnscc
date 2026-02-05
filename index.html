@@ -42,6 +42,8 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Home</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#project-overview">Project Overview</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#set-up">Set Up</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a>
@@ -49,6 +51,8 @@
     <li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#repository-structure">Repository Structure</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a>
     </li>
@@ -95,6 +99,7 @@
 <p><strong>Authors:</strong> <a href="https://github.com/gmarret">Gregoire Marret</a>, <a href="https://github.com/Jinsuan-UofC">Jinsu An</a>, <a href="https://github.com/RibaA">Farnoosh Abbas Aghababazadeh</a></p>
 <p><strong>Contact:</strong> <a href="gregoire.marret@uhn.ca">gregoire.marret@uhn.ca</a>, <a href="jinsu.an@ucalgary.ca">jinsu.an@ucalgary.ca</a>, <a href="farnoosh.abbasaghababazadeh@uhn.ca">farnoosh.abbasaghababazadeh@uhn.ca</a></p>
 <p><strong>Description:</strong> A Spatial Analysis Framework for Head and Neck Squamous Cell Carcinoma</p>
+<p>This repository contains computational workflows for analyzing spatial transcriptomics data from recurrent/metastatic head and neck squamous cell carcinoma (RM-HNSCC). The analyses characterize spatial tumor–immune–stromal organization, infer cell–cell communication, and derive spatially informed gene expression signatures that predict response to immune checkpoint blockade across cancer types.</p>
 <hr />
 <p><a href="https://github.com/prefix-dev/pixi"><img alt="pixi-badge" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/prefix-dev/pixi/main/assets/badge/v0.json&amp;style=flat-square" /></a>
 <a href="https://github.com/astral-sh/ruff"><img alt="Ruff" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json&amp;style=flat-square" /></a>
@@ -104,20 +109,39 @@
 <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/bhklab/spatial-analysis-framework-hnscc?style=flat-square" />
 <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/bhklab/spatial-analysis-framework-hnscc?style=flat-square" />
 <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/bhklab/spatial-analysis-framework-hnscc?style=flat-square" /></p>
+<h2 id="project-overview">Project Overview</h2>
+<p>This repository implements ....</p>
+<ul>
+<li><strong>Reproducibility</strong>: modular pipeline using <strong>Pixi</strong>, <strong>Python</strong>, and <strong>R</strong></li>
+</ul>
+<hr />
 <h2 id="set-up">Set Up</h2>
 <h3 id="prerequisites">Prerequisites</h3>
 <p>Pixi is required to run this project.
 If you haven't installed it yet, <a href="https://pixi.sh/latest/">follow these instructions</a></p>
 <h3 id="installation">Installation</h3>
-<ol>
-<li>Clone this repository to your local machine</li>
-<li>Navigate to the project directory</li>
-<li>Set up the environment using Pixi:</li>
-</ol>
-<pre><code class="language-bash">pixi install
+<pre><code class="language-bash"># Clone the repository
+git clone https://github.com/bhklab/predictio-uv-dist.git
+cd predictio-uv-dist
+
+# Install dependencies via Pixi
+pixi install
 </code></pre>
+<h2 id="repository-structure">Repository Structure</h2>
+<pre><code>predictio-uv-dist/
+├── config/           # YAML config files for each dataset and center
+├── data/             # Raw, processed, and results directories
+├── workflow/         # Scripts for analysis
+├── docs/             # MkDocs-based project documentation
+│   └── README.md     # Documentation index and setup instructions
+└── pixi.toml         # Pixi environment specification
+</code></pre>
+<hr />
 <h2 id="documentation">Documentation</h2>
-<p>Click <a href="https://bhklab.github.io/spatial-analysis-framework-hnscc">here</a> to view the full documentation.</p>
+<p>Full documentation, including usage instructions, data setup, config templates, and pipeline stages, will be available in the <code>docs/</code> folder or via published GitHub Pages.</p>
+<p>Start by downloading and organizing the raw input datasets as described in <a href="https://github.com/bhklab/spatial-analysis-framework-hnscc/blob/main/data/rawdata/README.md"><code>data/rawdata/README.md</code></a>.</p>
+<p>For data download and processing, please refer to the univariable repository:<br />
+🔗 <a href="https://github.com/bhklab/spatial-analysis-framework-hnscc?tab=readme-ov-file">https://github.com/bhklab/spatial-analysis-framework-hnscc?tab=readme-ov-file</a></p>
               
             </div>
           </div><footer>
@@ -170,5 +194,5 @@ If you haven't installed it yet, <a href="https://pixi.sh/latest/">follow these 
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2026-02-04 16:13:03.141906+00:00
+Build Date UTC : 2026-02-05 18:07:17.265061+00:00
 -->
