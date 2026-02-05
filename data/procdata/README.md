@@ -149,7 +149,7 @@ You can use the included `config/config_proc.yaml` as a **template** to set up n
 To generate the processed data object:
 
 ```bash
-Rscript workflow/scripts/runProcData.R
+Rscript workflow/external_validation_rnaseq/runProcData.R
 ```
 
 This script:
