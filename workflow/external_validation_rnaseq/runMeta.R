@@ -1,38 +1,40 @@
 # -----------------------------------------------------------------------------------------------------
 # Description:
-# This script performs meta-analysis of gene signature associations with immunotherapy outcomes 
-# across multiple studies. It combines results from precomputed association tests (e.g., Cox or 
-# logistic regression) and applies fixed/random effects meta-analysis using the `metafun()` function.
+# This script performs meta-analyses of gene signature associations with immunotherapy outcomes
+# across multiple independent cohorts. It integrates study-level association results derived
+# from precomputed regression models and summarizes effects using fixed- or random-effects
+# meta-analysis via the `metafun()` function.
 #
-# The analyses cover:
-#   - Pan-cancer meta-analysis (across all cancer types)
-#   - Per-cancer meta-analysis (e.g., Melanoma, Lung)
-#   - Per-treatment meta-analysis (e.g., PD-(L)1)
+# The meta-analyses are conducted at multiple levels:
+#   - Pan-cancer (all eligible cancer types combined)
+#   - Cancer-specific (e.g., Melanoma, Lung, Kidney)
+#   - Treatment-specific (e.g., PD-(L)1)
 #
-# For each category, both continuous and dichotomized (high/low) signature scores are analyzed:
-#   - PFS outcomes (Cox regression)
-#   - Response vs. Non-response outcomes (Logistic regression)
+# Analyses include:
+#   - Progression-free survival (PFS) associations from Cox proportional hazards models
+#     using either continuous signature metrics (e.g., distance to centroid2) or
+#     dichotomized high/low groupings
+#   - Objective response (responder vs. non-responder) associations from logistic
+#     regression models using continuous signature metrics
 #
 # Input:
-#   - Precomputed signature association results in RDA format:
-#       * sig_pfs.rda: Cox regression on continuous scores
-#       * sig_pfs_dicho.rda: Cox regression on dichotomized scores
-#       * sig_logreg.rda: Logistic regression on response (R/NR)
-#   - Each file must contain variables: Gene, Coef, SE, Pval, Study, N, Cancer_type, Treatment
+#   - Precomputed association result files in RDA format located in `data/results/assoc/`:
+#       * sig_pfs.rda        — Cox models (continuous predictors)
+#       * sig_pfs_dicho.rda  — Cox models (dichotomized predictors)
+#       * sig_logreg.rda     — Logistic regression models (response)
+#   - Each file must contain study-level estimates including:
+#       Gene, Coef, SE, Pval, Study, N, Cancer_type, Treatment
 #
 # Output:
-#   - Meta-analysis summary tables saved as CSV files in: result/meta/
-#       * Includes effect size, confidence interval, p-value, heterogeneity metrics (I², Q-p)
-#       * Results categorized by analysis type (Cont/Dicho), outcome type (PFS/Logreg), and group
-#
-# Dependencies:
-#   - Libraries: meta, forestplot, dplyr, data.table, PredictioR, MultiAssayExperiment
-#   - Custom function: metafun() (assumed to be defined in the environment)
+#   - Meta-analysis summary tables written to `data/results/meta/`, including:
+#       * Pooled effect sizes and confidence intervals
+#       * P-values and heterogeneity metrics (I², Q-test)
+#       * Stratification by outcome (PFS, R/NR), predictor type (continuous, dichotomized),
+#         and analysis group (pan-cancer or cancer-specific)
 #
 # Notes:
-#   - Only genes with results from ≥3 studies are included in the meta-analysis.
-#   - Meta-analysis is performed using study-level effect sizes and standard errors.
-#
+#   - Only features with results from ≥3 independent studies are included
+#   - Meta-analyses are performed using study-level effect sizes and standard errors
 # -----------------------------------------------------------------------------------------------------
 ##################################################
 ## Load libraries
@@ -49,8 +51,8 @@ library(MultiAssayExperiment)
 ## Set up directory
 ##################################################
 
-dir.input <- 'result/assoc'
-dir.output <- 'result/meta'
+dir.input <- 'data/results/assoc'
+dir.output <- 'data/results/meta'
 
 ########################################################################################################
 ############################################## pan-cancer (PFS) ########################################
@@ -58,7 +60,6 @@ dir.output <- 'result/meta'
 ## Continuous signature ----> PFS
 load(file.path(dir.input, "sig_pfs.rda"))
 genes <- unique(res_pfs$Gene)
-genes <- genes[!genes %in% c('CIN25_Carter', 'CIN70_Carter')]
 
 res_meta <- lapply(1:length(genes), function(k){
 
@@ -103,7 +104,6 @@ write.csv(res_meta, file = file.path(dir.output, 'meta_pancancer_pfs_cont.csv'),
 ## Dicho signature ---> PFS
 load(file.path(dir.input, "sig_pfs_dicho.rda"))
 genes <- unique(res_pfs$Gene)
-genes <- genes[!genes %in% c('CIN25_Carter', 'CIN70_Carter')]
 
 res_meta <- lapply(1:length(genes), function(k){
 
@@ -148,7 +148,6 @@ write.csv(res_meta, file = file.path(dir.output, 'meta_pancancer_pfs_dicho.csv')
 ## Continuous ---> R/NR 
 load(file.path(dir.input, "sig_logreg.rda"))
 genes <- unique(res_logreg$Gene)
-genes <- genes[!genes %in% c('CIN25_Carter', 'CIN70_Carter')]
 
 res_meta <- lapply(1:length(genes), function(k){
 
@@ -193,106 +192,11 @@ write.csv(res_meta, file = file.path(dir.output, 'meta_pancancer_logreg.csv'), r
 ########################################################################################################
 ############################################## per-cancer (Melanoma) ###################################
 ########################################################################################################
-## Continuous signature ---> PFS
-load(file.path(dir.input, "sig_pfs.rda"))
-res_pfs <- res_pfs[res_pfs$Cancer_type == 'Melanoma', ]
-genes <- unique(res_pfs$Gene)
-genes <- genes[!genes %in% c('CIN25_Carter', 'CIN70_Carter')]
-
-res_meta <- lapply(1:length(genes), function(k){
-  
-  df <- res_pfs[res_pfs$Gene == genes[k], ]
-  if(nrow(df) >= 3){
-
-   res <- metafun(coef = df$Coef,
-                     se = df$SE,
-                     study  = df$Study,
-                     pval = df$Pval,
-                     n = df$N,
-                     cancer.type = df$Cancer_type,
-                     treatment = df$Treatment,
-                     feature = unique(df$Gene),
-                     cancer.spec = FALSE,
-                     treatment.spec = FALSE)
-   res$meta_summery
-
-  }else{
-
-   data.frame(Gene = genes[k],
-              Coef = NA,
-              SE =NA,
-              CI_lower = NA,
-              CI_upper = NA,
-              Pval = NA,
-              I2 = NA,
-              Q_Pval = NA)
-
-  }
-
-})
-
-res_meta <- do.call(rbind, res_meta)        
-res_meta  <- res_meta[!is.na(res_meta$Coef), ]
-res_meta$Type <- "Cont"
-res_meta $group <- "Melanoma"
-res_meta$Outcome <- "PFS"
-
-write.csv(res_meta, file = file.path(dir.output, 'meta_melanoma_pfs_cont.csv'), row.names= FALSE)
-
-## Dicho signature ---> PFS
-load(file.path(dir.input, "sig_pfs_dicho.rda"))
-res_pfs <- res_pfs[res_pfs$Cancer_type == 'Melanoma', ]
-
-genes <- unique(res_pfs$Gene)
-genes <- genes[!genes %in% c('CIN25_Carter', 'CIN70_Carter')]
-
-res_meta <- lapply(1:length(genes), function(k){
-
-  
-  df <- res_pfs[res_pfs$Gene == genes[k], ]
-  if(nrow(df) >= 3){
-
-   res <- metafun(coef = df$Coef,
-                     se = df$SE,
-                     study  = df$Study,
-                     pval = df$Pval,
-                     n = df$N,
-                     cancer.type = df$Cancer_type,
-                     treatment = df$Treatment,
-                     feature = unique(df$Gene),
-                     cancer.spec = FALSE,
-                     treatment.spec = FALSE)
-   res$meta_summery
-
-  }else{
-
-   data.frame(Gene = genes[k],
-              Coef = NA,
-              SE =NA,
-              CI_lower = NA,
-              CI_upper = NA,
-              Pval = NA,
-              I2 = NA,
-              Q_Pval = NA)
-
-  }
-
-})
-
-res_meta <- do.call(rbind, res_meta)        
-res_meta  <- res_meta [!is.na(res_meta$Coef), ]
-res_meta$Type <- "Dicho"
-res_meta$group <- "Melanoma"
-res_meta$Outcome <- "PFS"
-
-write.csv(res_meta, file = file.path(dir.output, 'meta_melanoma_pfs_dicho.csv'), row.names= FALSE)
-
 ## Continuous ---> R/NR  
 
 load(file.path(dir.input, "sig_logreg.rda"))
 res_logreg <- res_logreg[res_logreg$Cancer_type == 'Melanoma', ]
 genes <- unique(res_logreg$Gene)
-genes <- genes[!genes %in% c('CIN25_Carter', 'CIN70_Carter')]
 
 res_meta <- lapply(1:length(genes), function(k){
   
@@ -339,10 +243,8 @@ write.csv(res_meta, file = file.path(dir.output, 'meta_melanoma_logreg.csv'), ro
 ########################################################################################################
 ## Continuous signature ----> PFS 
 load(file.path(dir.input, "sig_pfs.rda"))
-
 res_pfs <- res_pfs[res_pfs$Cancer_type == 'Lung', ]
 genes <- unique(res_pfs$Gene)
-genes <- genes[!genes %in% c('CIN25_Carter', 'CIN70_Carter')]
 
 res_meta <- lapply(1:length(genes), function(k){
   
@@ -387,9 +289,8 @@ write.csv(res_meta, file = file.path(dir.output, 'meta_lung_pfs_cont.csv'), row.
 ## Dicho signature ----> PFS
 load(file.path(dir.input, "sig_pfs_dicho.rda"))
 res_pfs <- res_pfs[res_pfs$Cancer_type == 'Lung', ]
-
 genes <- unique(res_pfs$Gene)
-genes <- genes[!genes %in% c('CIN25_Carter', 'CIN70_Carter')]
+
 res_meta <- lapply(1:length(genes), function(k){
 
   
@@ -436,7 +337,6 @@ write.csv(res_meta, file = file.path(dir.output, 'meta_lung_pfs_dicho.csv'), row
 load(file.path(dir.input, "sig_logreg.rda"))
 res_logreg <- res_logreg[res_logreg$Cancer_type == 'Lung', ]
 genes <- unique(res_logreg$Gene)
-genes <- genes[!genes %in% c('CIN25_Carter', 'CIN70_Carter')]
 
 res_meta <- lapply(1:length(genes), function(k){
 
@@ -482,11 +382,9 @@ write.csv(res_meta, file = file.path(dir.output, 'meta_lung_logreg.csv'), row.na
 ############################################## per-cancer (Kidney) #####################################
 ########################################################################################################
 ## Continuous ---> R/NR  
-
 load(file.path(dir.input, "sig_logreg.rda"))
 res_logreg <- res_logreg[res_logreg$Cancer_type == 'Kidney', ]
 genes <- unique(res_logreg$Gene)
-genes <- genes[!genes %in% c('CIN25_Carter', 'CIN70_Carter')]
 
 res_meta <- lapply(1:length(genes), function(k){
 
@@ -527,7 +425,6 @@ res_meta$group <- "Kidney"
 res_meta$Outcome <- "R/NR"
 
 write.csv(res_meta, file = file.path(dir.output, 'meta_kidney_logreg.csv'), row.names= FALSE)
-
 
 ###################################################
 ## Merge integration results
