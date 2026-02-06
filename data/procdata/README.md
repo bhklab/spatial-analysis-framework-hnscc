@@ -62,7 +62,7 @@ This script:
 - Saves the result as a `.rda` file for downstream analysis
 
 ➡️ Alternatively, you can use a precompiled `.rda` file from Zenodo:  
-[Zenodo DOI: XXXX](https://zenodo.org/records/XXXX)
+[Zenodo DOI 10.5281/zenodo.18509237](https://zenodo.org/records/18509237)
 
 ---
 
@@ -160,7 +160,7 @@ This script:
 - Saves the result as a `.rda` file for downstream analysis
 
 ➡️ Alternatively, you can use a precompiled `.rda` file from Zenodo:  
-[Zenodo DOI: XXXX](https://zenodo.org/records/XXXXX)
+[Zenodo DOI: 10.5281/zenodo.18509237](https://zenodo.org/records/18509237)
 
 ---
 
