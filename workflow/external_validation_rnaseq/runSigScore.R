@@ -208,18 +208,18 @@ geneSig.score <- lapply(1:length(signature), function(i){
     
   }
   
-  if(signature_info[signature_info$signature == sig_name, "method"] == "Specific Algorithm" & sig_name == "PredictIO_Bareche"){
+  #if(signature_info[signature_info$signature == sig_name, "method"] == "Specific Algorithm" & sig_name == "PredictIO_Bareche"){
     
-    geneSig <- geneSigPredictIO(dat.icb = expr,
-                                sig = signature[[i]],
-                                sig.name = sig_name,
-                                missing.perc = 0.5,
-                                const.int = 1,
-                                n.cutoff = 10,
-                                sig.perc = 0.8,
-                                study = study_icb)
+  #  geneSig <- geneSigPredictIO(dat.icb = expr,
+  #                              sig = signature[[i]],
+  #                              sig.name = sig_name,
+  #                              missing.perc = 0.5,
+  #                              const.int = 1,
+  #                              n.cutoff = 10,
+  #                              sig.perc = 0.8,
+  #                              study = study_icb)
     
-  }
+  #}
   
   if(signature_info[signature_info$signature == sig_name, "method"] == "Specific Algorithm" & sig_name == "IPRES_Hugo"){
     
