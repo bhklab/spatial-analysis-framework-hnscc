@@ -45,8 +45,8 @@ library(PredictioR)
 library(data.table)
 library(ComplexHeatmap)
 
-dir.input <- 'result/score'
-dir.output <- 'result/cor'
+dir.input <- 'data/results/score'
+dir.output <- 'data/results/cor'
 
 ############################################
 ## load signature score data
@@ -62,7 +62,7 @@ study_icb <- substr(files, 1, nchar(files) - 4)
 names(geneSig.score) <- study_icb
 
 # signature information
-sig.info <- read.csv(file.path('data', 'signature_information.csv')) # 53 signatures
+sig.info <- read.csv(file.path('data/results/sig', 'signature_information.csv')) 
 
 ############################################################
 ## Pearson Correlation analysis
@@ -190,9 +190,6 @@ meta.cor <- meta.cor[!is.na(meta.cor$r), ]
 geneSig1 <- unique(meta.cor$geneSig1)
 geneSig2 <- unique(meta.cor$geneSig1)
 
-geneSig1 <- geneSig1[!geneSig1 %in% c('CIN25_Carter', 'CIN70_Carter')]
-geneSig2 <- geneSig2[!geneSig2 %in% c('CIN25_Carter', 'CIN70_Carter')]
-
 metaCor <- lapply(1:length(geneSig1), function(i){
 
   print(i)
@@ -252,7 +249,7 @@ plot(row.clus, labels = rownames(metaCor),
 dev.off()
 
 # Extract clusters by specifying the number of clusters
-clusters_k <- cutree(row.clus, k = res$Best.nc[1])  # Change 'k' to your desired number of clusters # 6
+clusters_k <- cutree(row.clus, k = res$Best.nc[1])  # Change 'k' to your desired number of clusters 
 
 # Extract clusters by specifying the height
 clusters_h <- cutree(col.clus, k = res$Best.nc[1])  # Change 'h' to your desired height
