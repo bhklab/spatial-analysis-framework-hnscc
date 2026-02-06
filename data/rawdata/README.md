@@ -54,7 +54,7 @@ These datasets are not redistributed in this repository and must be downloaded d
 
 ## Bulk RNA-seq Data (External Validation Cohorts)
 
-To evaluate the generalizability of spatially informed signatures, bulk RNA-seq datasets from multiple immune checkpoint blockade (ICB) cohorts were analyzed.
+To evaluate the generalizability of spatially informed signatures, bulk RNA-seq datasets from multiple ICB cohorts were analyzed.
 
 ### ORCESTRA Platform
 
@@ -66,10 +66,21 @@ Please download the dataset using the following curated release:
 
 This dataset includes:
 - Pre-treatment normalized RNA-seq expression data (TPM)  
-- Clinical annotations for immune checkpoint blockade (ICB) studies  
+- Clinical annotations for ICB studies  
 - Associated metadata and processing documentation  
 
 Only a subset of cohorts from ORCESTRA was included, based on predefined inclusion criteria.
+
+### Private Bulk RNA-seq Validation Cohorts
+
+In addition to publicly available datasets accessed via ORCESTRA, selected **private bulk RNA-seq cohorts** were included for external validation of spatially informed gene expression signatures.
+
+These datasets consist of:
+- Pre-treatment whole-transcriptome bulk RNA-seq
+- Harmonized clinical annotations, including response and survival outcomes
+- ICB monotherapy–treated patients
+
+Access to these cohorts is restricted under institutional review board (IRB) approvals and data-sharing agreements. Raw data are not redistributed in this repository due to patient privacy and consent limitations.
 
 ---
 
@@ -81,7 +92,7 @@ Gene expression signatures used for scoring, enrichment, and benchmarking were o
 
 Each signature is:
 - Annotated with source publication  
-- Categorized (e.g., ICB-sensitive, ICB-resistant)  
+- Categorized (e.g., sensitive, resistant)  
 - Used for GSVA, weighted mean, ssGSEA, or method-specific scoring  
 
 ---
