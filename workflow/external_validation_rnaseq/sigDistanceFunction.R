@@ -4,22 +4,28 @@
 # This script defines helper functions to compute a spatially
 # informed gene expression signature from bulk or spatial RNA-seq
 # data. Signature activity is first quantified using rank-based
-# single-sample scoring, and samples are then projected into a
+# single-sample scoring, after which samples are projected into a
 # low-dimensional signature space defined by reference centroids.
 #
 # For each sample, Euclidean distances to two predefined centroids
-# (e.g., representing distinct spatial TME states) are computed.
-# A normalized distance difference is returned as the final
-# signature score, where smaller distance to the favorable centroid
-# indicates higher predicted sensitivity to immune checkpoint
-# blockade (ICB).
+# (e.g., representing distinct spatial tumor microenvironment
+# states) are computed. The final signature score is defined as the
+# Euclidean distance to a selected reference centroid (centroid 2),
+# which in the discovery cohort corresponds to a spatial state
+# associated with favorable progression-free survival following
+# immune checkpoint blockade (ICB).
+#
+# Lower distances to centroid 2 indicate greater similarity to the
+# favorable spatial TME state and are interpreted as higher
+# predicted sensitivity to ICB.
 #
 # Functions:
 #   - compute_distances(): Computes Euclidean distances from a
 #     sample to two centroids in signature space.
 #   - geneSigNovel(): Computes rank-based signature scores,
-#     projects samples onto centroid space, and returns a
-#     spatially informed gene signature score per sample.
+#     projects samples onto centroid space, and returns the
+#     distance to the reference centroid (centroid 2) as the
+#     spatially informed signature score per sample.
 #
 # Input data formats:
 #   - SummarizedExperiment
@@ -27,7 +33,7 @@
 #   - matrix or data.frame (genes × samples)
 #
 # Output:
-#   - Numeric vector of spatially informed signature scores
+#   - Numeric vector of centroid-distance–based signature scores
 #     (one value per sample)
 #
 # Dependencies:
@@ -107,10 +113,9 @@ geneSigNovel <- function (dat.icb, sig, sig.name, missing.perc = 0.50, const.int
       # Step 2 ---- compute distance
       
       dist <- t(apply(sigScore_ssGSEA, 1, compute_distances, centroid1, centroid2))
+
       # Focus on distance to centroid2, which in the training set is associated with more favorable PFS outcomes following immuno
-      
-      # Normalized distance difference
-      geneSig <- (dist[,1] - dist[,2]) / rowSums(dist, na.rm = TRUE)
+      geneSig <- dist[,2]
 
     }
     
