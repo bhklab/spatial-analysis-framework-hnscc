@@ -69,9 +69,9 @@ source("workflow/external_validation_rnaseq/sigDistanceFunction.R")
 # set up directory
 #######################################################
 
-dir.sig <- 'data/'
-dir.input <- 'result/data'
-dir.output <- 'result/score'
+dir.sig <- 'data/results/sig'
+dir.input <- 'data/results/data'
+dir.output <- 'data/results/score'
 
 ######################################################
 # load centroids
@@ -82,19 +82,19 @@ cent2 <- readRDS(file.path(dir.sig , 'Centroid2_finalv2.rds'))
 ####################################################################
 ## Load selected IO signature
 ####################################################################
-files <- list.files(file.path(dir.input, 'symbol')) 
+files <- list.files(file.path(dir.input)) 
 
-sig_file <- list.files(file.path('data', 'signature'))
+sig_file <- list.files(file.path(dir.sig, 'signature'))
 sig_name <- substr(sig_file, 1, nchar(sig_file)-4)
 
-signature_info <- read.csv(file.path('data', 'signature_information.csv')) 
+signature_info <- read.csv(file.path(dir.sig, 'signature_information.csv')) 
 int <- intersect(sig_name, signature_info$signature)
 
 signature <- sapply(1:length(int), function(k){
   
   print(int[k])
   j <- which(sig_name == int[k])
-  load(file.path('data', 'signature', sig_file[j]))
+  load(file.path(dir.sig, 'signature', sig_file[j]))
   sig
 
 })
@@ -107,7 +107,7 @@ names(signature) <- int
 for(k in 1:length(files)){ 
 
 print(files[k])
-load(file.path(dir.input, 'symbol', files[k]))  
+load(file.path(dir.input, files[k]))  
 
 # set up study name, cancer type, and treatment type
 study_name <- substr(files[k], 5, nchar(files[k])-4)
