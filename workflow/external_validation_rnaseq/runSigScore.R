@@ -38,7 +38,7 @@
 #       * GSVA
 #       * ssGSEA
 #       * Weighted Mean
-#       * Signature-specific algorithms (e.g., COX-IS, IPS, PredictIO)
+#       * Signature-specific algorithms (e.g., COX-IS, IPS)
 #   - Centroid-based distance scoring for spatially informed signatures
 #
 # Output:
