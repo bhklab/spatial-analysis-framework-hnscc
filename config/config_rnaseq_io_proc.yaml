@@ -1,0 +1,16 @@
+# config_proc.yaml
+
+# =========================
+# Study & Cohort Metadata
+# =========================
+study_icb: "ICB_Gide"          # e.g., ICB_Gide
+cancer_type: "Melanoma"        # e.g., Melanoma
+treatment_type: "PD-(L)1"      # e.g., PD-(L)1, CTLA-4, combo
+
+# =========================
+# File & Directory Settings
+# =========================
+dir_in: "data/rawdata"         # Folder containing raw .rds files
+dir_out: "data/procdata"       # Folder to save processed .rda output
+
+

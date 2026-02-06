@@ -1,0 +1,50 @@
+# config_local.yaml
+
+# =========================
+# Study & Cohort Metadata
+# =========================
+study_icb: "ICB_Gide"          # e.g., ICB_Gide
+cancer_type: "Melanoma"        # e.g., Melanoma
+treatment_type: "PD-(L)1"      # e.g., PD-(L)1, CTLA-4, combo
+
+# =========================
+# File & Directory Settings
+# =========================
+dir_in: "data/procdata"             # Folder containing input .rda file
+dir_out: "data/results/data"       # Folder to save all output .rda files
+
+# Object names inside the loaded .rda file
+objects:
+  expr: "dat$ICB"
+  signature: "dat$signature"
+  signature_info: "dat$sig.info"
+
+# =========================
+# Signature Scoring Settings
+# =========================
+signature_scoring:
+  missing.perc: 0.5       # Max % of missing genes allowed in signature
+  const.int: 1        # Constant added to avoid log(0)
+  n.cutoff: 15            # Minimum samples required for analysis
+  sig.perc: 0.8           # Required % of genes present to compute score
+
+# =========================
+# Logistic Regression Settings
+# =========================
+logreg:
+  n0.cutoff: 3            # Minimum number of non-responders
+  n1.cutoff: 3            # Minimum number of responders
+
+# =========================
+# Output File Name Suffixes
+# (Filenames will be prepended with study + cancer + treatment)
+# =========================
+output_files:
+  scores: "score/<study><cancer_type><treatment>.rda"
+  correlation: "cor/<study><cancer_type><treatment>.rda"
+  survival_pfs (cont): "assoc/sig_pfs.rda"
+  survival_pfs (cont): "assoc/sig_pfs_dicho.rda"
+  logreg_response: "assoc/sig_logreg.rda"
+  meta_results: "meta/meta_all.csv"
+  cluster: "cluster/clusters_IO_genes.csv"
+  
