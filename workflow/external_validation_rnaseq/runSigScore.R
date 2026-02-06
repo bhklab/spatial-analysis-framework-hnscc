@@ -1,54 +1,54 @@
 # -------------------------------------------------------------------------------
 # Description:
 # This script computes gene signature scores across multiple immune-oncology (IO) 
-# transcriptomic datasets using various algorithms, including singscore, GSVA, 
-# ssGSEA, weighted mean, and other signature-specific methods. For signatures 
-# defined using the novel progression-related model, scores are additionally 
-# compared to two predefined centroids representing molecular profiles associated 
-# with progression-free survival (PFS) and response (R/NR) following immunotherapy.
+# transcriptomic datasets using a variety of established algorithms, including 
+# singscore, GSVA, ssGSEA, weighted mean, and other signature-specific methods.
 #
-# The script is designed to process multiple preprocessed ICB datasets stored as 
+# For spatially informed (novel) signatures, samples are first scored using 
+# rank-based single-sample gene set scoring and then projected into a 
+# low-dimensional signature space defined by two predefined centroids derived 
+# from spatial transcriptomics analyses.
+#
+# For each sample, Euclidean distances to both centroids are computed. The final 
+# spatially informed signature score is defined as the distance to Centroid 2, 
+# which represents a molecular phenotype associated with favorable 
+# progression-free survival (PFS) and response to immune checkpoint blockade (ICB).
+# Lower distances indicate greater similarity to the favorable spatial state.
+#
+# The script processes multiple preprocessed ICB datasets stored as 
 # SummarizedExperiment objects and integrates signature scoring, centroid-based 
-# distance computation (when applicable), and clinical outcome information.
+# distance computation (when applicable), and clinical outcome metadata.
 #
 # Required Inputs:
 #   - SummarizedExperiment (.rda) files stored in `result/data`:
-#       * Contain normalized gene expression matrices (e.g., log2(TPM + 1))
-#       * Include clinical outcome data (PFS time and event)
-#   - Gene signature list in Ensembl format (`Genesets__GENCODEv40_...`)
-#   - Signature information table (`signature_information.csv`) describing 
-#       the scoring method for each signature
-#   - Two centroid profiles saved as .rds files (used only for novel signatures)
+#       * Normalized gene expression matrices (e.g., log2(TPM + 1))
+#       * Clinical outcome annotations (PFS time and event)
+#   - Gene signature definitions in Ensembl or gene symbol format
+#   - Signature metadata table (`signature_information.csv`) specifying scoring methods
+#   - Two centroid profiles stored as .rds files (used for spatial signatures only)
 #
-# Parameters (set internally via file name parsing):
+# Parameters (parsed from file names):
 #   - study_icb       – Unique study identifier (e.g., ICB_Gide)
 #   - cancer_type     – Cancer type (e.g., Melanoma)
 #   - treatment_type  – Immunotherapy treatment (e.g., PD-1/PD-L1)
 #
 # Analyses performed:
-#   - Compute per-sample signature scores using the appropriate method:
+#   - Per-sample gene signature scoring using:
 #       * singscore (simpleScore)
 #       * GSVA
 #       * ssGSEA
 #       * Weighted Mean
 #       * Signature-specific algorithms (e.g., COX-IS, IPS, PredictIO)
-#   - For novel progression-related signatures:
-#       * Compare each sample’s profile to two centroids via Euclidean distance
+#   - Centroid-based distance scoring for spatially informed signatures
 #
 # Output:
-#   - A metadata file for each dataset including:
-#       * Signature scores for all evaluated gene sets
-#   - Saved as: `result/score/<study>__<cancer>__<treatment>.rda`
-#
-# Usage:
-#   The script can be executed in batch mode across multiple datasets.
-#   Input files are automatically parsed and processed in a loop.
+#   - Signature score matrices saved as:
+#       `result/score/<study>__<cancer>__<treatment>.rda`
 #
 # Notes:
-#   - Centroid2 is presumed to represent a molecular phenotype associated with 
-#     better PFS outcomes.
-#   - Signature genes must match the identifiers in the expression matrix 
-#     (Ensembl or gene symbols as required).
+#   - Centroid 2 corresponds to a spatial tumor–microenvironment state associated
+#     with improved clinical outcomes under ICB.
+#   - Signature gene identifiers must match those in the expression matrix.
 #
 # -------------------------------------------------------------------------------
 #######################################################
@@ -82,12 +82,12 @@ cent2 <- readRDS(file.path(dir.sig , 'Centroid2_finalv2.rds'))
 ####################################################################
 ## Load selected IO signature
 ####################################################################
-files <- list.files(file.path(dir.input, 'symbol')) # 36 cohorts (remove HNC cancer type) ---> only PD-(L)1 cohorts
+files <- list.files(file.path(dir.input, 'symbol')) 
 
 sig_file <- list.files(file.path('data', 'signature'))
 sig_name <- substr(sig_file, 1, nchar(sig_file)-4)
 
-signature_info <- read.csv(file.path('data', 'signature_information.csv')) # 55 signatures
+signature_info <- read.csv(file.path('data', 'signature_information.csv')) 
 int <- intersect(sig_name, signature_info$signature)
 
 signature <- sapply(1:length(int), function(k){
@@ -261,7 +261,7 @@ geneSig.score <- lapply(1:length(signature), function(i){
   }
   
 
-  if(signature_info[signature_info$signature == sig_name, "method"] == "Specific Algorithm" & sig_name == "sigNovel"){
+  if(signature_info[signature_info$signature == sig_name, "method"] == "Specific Algorithm" & sig_name == "SpatialSignature_Marret"){
     
     geneSig <- geneSigNovel(dat.icb = expr,
                             sig = signature[[i]],
