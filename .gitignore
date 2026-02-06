@@ -1,6 +1,9 @@
 #############################################################################
 # COMPREHENSIVE .GITIGNORE FILE
 #############################################################################
+# Ignore everything under results by default
+data/results/**
+
 # Allow README
 !data/results/README.md
 
