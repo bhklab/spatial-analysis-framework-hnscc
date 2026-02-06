@@ -55,6 +55,19 @@ In addition to publicly available cohorts, selected private bulk RNA-seq dataset
 
 These datasets were processed and analyzed using the same harmonization, normalization, and scoring procedures applied to public validation cohorts. Due to patient privacy and consent restrictions, raw data are not redistributed in this repository.
 
+**Representative private validation cohorts include:**
+
+| Study / Lead Author | Trial / Program            | Cancer Type                  | Data Repository | Access Status |
+|--------------------|----------------------------|------------------------------|-----------------|---------------|
+| Ravi et al.        | SU2C-MAR                   | Non-small cell lung cancer   | dbGaP / EGA     | Restricted    |
+| McDermott et al.   | IMmotion150                | Renal cell carcinoma         | EGA             | Restricted    |
+| Priestley et al.   | Hartwig Medical Foundation | Pan-cancer                   | HMF             | Restricted    |
+| Rittmeyer et al.   | OAK (NCT02008227)           | Non-small cell lung cancer   | EGA             | Restricted    |
+| Fehrenbacher et al.| POPLAR (NCT01903993)        | Non-small cell lung cancer   | EGA             | Restricted    |
+
+Access to these datasets requires approval from the corresponding data custodians and compliance with institutional and ethical data-use agreements. Cohort-level inclusion, preprocessing, and harmonization procedures are described in the **Materials and Methods** and **Supplementary Data** of the manuscript.
+
+
 ### Gene Signature Resources
 
 RNA-based gene expression signatures were used for spatial feature scoring, enrichment analysis, and benchmarking.
