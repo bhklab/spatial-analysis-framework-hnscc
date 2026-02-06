@@ -63,8 +63,8 @@ library(enrichR)
 ## Signature information
 ###########################################
 
-dir_in <- 'data'
-dir_out <- 'result/cluster'
+dir_in <- 'data/results/sig'
+dir_out <- 'data/results/cluster'
 
 ###########################################################
 ## Load IO data and signatures
@@ -72,7 +72,7 @@ dir_out <- 'result/cluster'
 sig_file <- list.files(file.path(dir_in, 'signature'))
 sig_name <- substr(sig_file, 1, nchar(sig_file)-4)
 
-signature_info <- read.csv(file.path(dir_in, 'signature_information.csv')) # 53 signatures
+signature_info <- read.csv(file.path(dir_in, 'signature_information.csv')) 
 int <- intersect(sig_name, signature_info$signature)
 sig_file <- sig_file[which(sig_name  %in% int)]
 sig_name <- sig_name[which(sig_name  %in% int)]
@@ -90,7 +90,6 @@ names(signature) <- sig_name
 dir_GeneSig <- file.path(dir_in, 'signature')
 GeneSig_list <- list.files(dir_GeneSig)
 GeneSig_list <- GeneSig_list[order(GeneSig_list)]
-GeneSig_list <- GeneSig_list[!GeneSig_list %in% c("CIN25_Carter.rda", "CIN70_Carter.rda") ]
 
 data <- lapply(1:length(GeneSig_list), function(k){
 
@@ -150,7 +149,7 @@ x1 <- pca$x[ , 1:2]
 apres <- apcluster(negDistMat(r=2), x1)
 
 ## Visualization plot
-pdf(file = file.path(dir_out, "IO_sig_gene_final.pdf"), 
+pdf(file = file.path(dir_out, "IO_sig_gene.pdf"), 
      width = 8, height = 5)
 
 par(
