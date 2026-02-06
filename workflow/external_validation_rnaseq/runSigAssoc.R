@@ -1,41 +1,46 @@
 # -------------------------------------------------------------------------------
 # Description:
-# This script evaluates the association between gene signature scores or 
-# distance metrics and two clinical outcomes across multiple immunotherapy 
-# datasets: progression-free survival (PFS) and response (responder vs. 
-# non-responder). Signature scores or distances (e.g., distance to centroid2) 
-# are assumed to be pre-computed and stored in `.rda` files per dataset.
+# This script evaluates the association between spatially informed gene signature
+# metrics and clinical outcomes across multiple immunotherapy cohorts.
+# The primary predictor is the Euclidean distance of each sample to a predefined
+# reference centroid (centroid2), representing a spatial TME state associated with
+# favorable progression-free survival (PFS) following immune checkpoint blockade.
+#
+# Signature distances are assumed to be pre-computed and stored in `.rda` files
+# for each dataset.
 #
 # The script performs:
-#   - Cox proportional hazards modeling to assess association with PFS
-#     (as both continuous and dichotomized variables)
-#   - Logistic regression modeling to assess association with response status
+#   - Cox proportional hazards regression to assess association with PFS
+#     (using distance to centroid2 as a continuous or dichotomized predictor)
+#   - Logistic regression to assess association with objective response
+#     (responder vs. non-responder)
 #
 # Required Inputs:
-#   - Score/distance metadata files (`.rda`) in `result/score/`, each containing:
-#       * Signature values (e.g., distance to centroids or score per signature)
+#   - Signature distance files (`.rda`) in `result/score/`, each containing:
+#       * Distance to centroid2 per sample
 #       * PFS time (`survival_time_pfs`) and event (`event_occurred_pfs`)
-#       * (Optional) binary signature indicators (e.g., high/low groupings)
-#       * Response status (`response`), if available
+#       * Response status (`response`), when available
 #
 # Parameters:
-#   - Signature names are derived from object rownames
-#   - Dataset metadata (study name, cancer type, treatment type) parsed from filenames
+#   - Dataset metadata (study, cancer type, treatment) parsed from file names
+#   - Signature names derived from object row names
 #
 # Analyses performed:
-#   - Association with PFS:
-#       * Cox regression using signature scores/distances as continuous predictors
-#       * Cox regression with dichotomized predictors (e.g., high vs. low)
-#   - Association with response:
-#       * Logistic regression with signature scores/distances as continuous predictors
+#   - PFS association:
+#       * Cox regression using centroid distance as a continuous predictor
+#       * Cox regression using median-dichotomized distance (high vs. low)
+#   - Response association:
+#       * Logistic regression using centroid distance as a continuous predictor
 #
 # Output:
-#   - `sig_pfs.rda` / `sig_pfs.csv` — Cox results using continuous variables
-#   - `sig_pfs_dicho.rda` / `sig_pfs_dicho.csv` — Cox results using dichotomized variables
-#   - `sig_logreg.rda` / `sig_logreg.csv` — Logistic regression results for response
-#   - All outputs saved to `result/assoc/` or `result/`
+#   - `sig_pfs.rda` / `sig_pfs.csv` — Cox regression (continuous distance)
+#   - `sig_pfs_dicho.rda` / `sig_pfs_dicho.csv` — Cox regression (dichotomized)
+#   - `sig_logreg.rda` / `sig_logreg.csv` — Logistic regression (response)
+#   - Outputs saved under `result/assoc/`
 #
 # Notes:
+#   - Smaller distance to centroid2 indicates higher similarity to the
+#     favorable spatial phenotype
 #   - PFS is right-censored at 24 months
 #   - Dichotomized models require ≥3 samples per group
 #   - Response models require ≥1 sample per response category
@@ -50,8 +55,8 @@ library(data.table)
 library(survcomp)
 library(MultiAssayExperiment)
 
-dir.input <- 'result/score'
-dir.output <- 'result/'
+dir.input <- 'data/results/score'
+dir.output <- 'data/results/'
 
 ############################################
 ## load signature score data
@@ -70,13 +75,13 @@ names(geneSig.score) <- study_icb
 ## Association with PFS (Cont)
 #######################################
 ## load data
-files <- list.files(file.path('result/data', 'symbol')) # 26 cohorts
+files <- list.files(file.path('data/results/data')) # 26 cohorts
 
 ## association continious
 res_pfs <- lapply(1:length(files), function(k){ 
 
 print(files[k])
-load(file.path('result/data', 'symbol', files[k]))  
+load(file.path('data/results/data', files[k]))  
 
 study_name <- substr(files[k], 1, nchar(files[k])-4)
 study_icb <- strsplit(study_name, '__')[[1]][1]
@@ -138,13 +143,13 @@ write.csv(res_pfs, file = file.path(dir.output, 'assoc', 'sig_pfs.csv'), row.nam
 ## Association with PFS (Dicho)
 #######################################
 ## load data
-files <- list.files(file.path('result/data', 'symbol'))
+files <- list.files(file.path('data/results/data'))
 
 ## association dicho (High vs Low)
 res_pfs <- lapply(1:length(files), function(k){ 
 
 print(files[k])
-load(file.path('result/data', 'symbol', files[k]))  
+load(file.path('data/results/data', files[k]))  
 
 study_name <- substr(files[k], 1, nchar(files[k])-4)
 study_icb <- strsplit(study_name, '__')[[1]][1]
@@ -217,13 +222,13 @@ write.csv(res_pfs, file = file.path(dir.output, 'assoc', 'sig_pfs_dicho.csv'), r
 ## Association with response (R/NR)
 #######################################
 ## load data
-files <- list.files(file.path('result/data', 'symbol'))
+files <- list.files(file.path('data/results/data'))
 
 ## association response
 res_logreg <- lapply(1:length(files), function(k){ 
 
 print(files[k])
-load(file.path('result/data', 'symbol', files[k]))  
+load(file.path('data/results/data', files[k]))  
 
 study_name <- substr(files[k], 1, nchar(files[k])-4)
 study_icb <- strsplit(study_name, '__')[[1]][1]
