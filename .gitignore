@@ -2,19 +2,22 @@
 # RESULTS DIRECTORY CONTROL
 #############################################################################
 
-# Ignore everything under results by default
+# Ignore everything under results
 data/results/**
 
-# Re-allow directory traversal
+# Re-allow directories (IMPORTANT)
 !data/results/
 !data/results/Fig/
+!data/results/Fig/**/
 !data/results/assoc/
+!data/results/assoc/**/
 !data/results/meta/
+!data/results/meta/**/
 
 # Allow README
 !data/results/README.md
 
-# Allow placeholders only
+# Allow gitkeep files
 !data/results/Fig/**/.gitkeep
 !data/results/assoc/**/.gitkeep
 !data/results/meta/**/.gitkeep
