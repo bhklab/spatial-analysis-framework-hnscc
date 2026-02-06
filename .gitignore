@@ -1,6 +1,18 @@
 #############################################################################
 # COMPREHENSIVE .GITIGNORE FILE
 #############################################################################
+# Allow README
+!data/results/README.md
+
+# Allow selected result folders
+!data/results/Fig/
+!data/results/assoc/
+!data/results/meta/
+
+# Allow placeholders inside allowed folders
+!data/results/Fig/.gitkeep
+!data/results/assoc/.gitkeep
+!data/results/meta/.gitkeep
 
 #############################################################################
 # 1. OPERATING SYSTEM SPECIFIC FILES
