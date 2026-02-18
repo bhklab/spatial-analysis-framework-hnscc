@@ -5,7 +5,7 @@ The repository is intended for methodological transparency; running end-to-end r
 
 ## Folder structure
 
-code/
+visium_analysis/
 ├── 01_part1/ # Preprocessing + spot/cell annotations + deconvolution + malignant calling
 ├── 02_part2/ # Malignant/non-malignant characterization + neighborhood analysis
 ├── 03_part3/ # inferCNV + CellChat (compute-focused; minimal/no visualization)
