@@ -1,4 +1,17 @@
-# config_local.yaml
+# config_rnaseq_io.yaml
+
+# =========================
+# Directory Settings
+# =========================
+paths:
+  input_dir: "data/procdata"           # Folder containing input .rda file
+  output_dir: "data/results"           # Base output directory
+  data_dir: "data/results/data"
+  score_dir: "data/results/score"
+  assoc_dir: "data/results/assoc"
+  meta_dir: "data/results/meta"
+  cluster_dir: "data/results/cluster"
+  fig_dir: "data/results/Fig"
 
 # =========================
 # Study & Cohort Metadata
@@ -29,6 +42,14 @@ signature_scoring:
   sig.perc: 0.8           # Required % of genes present to compute score
 
 # =========================
+# Survival Analysis Settings
+# =========================
+survival:
+  censor_time_months: 24
+  min_group_size: 3            # For dichotomization
+  predictor_type: "continuous" # continuous or dichotomized
+
+# =========================
 # Logistic Regression Settings
 # =========================
 logreg:
@@ -48,3 +69,10 @@ output_files:
   meta_results: "meta/meta_all.csv"
   cluster: "cluster/clusters_IO_genes.csv"
   
+# =========================
+# Software Environment
+# =========================
+environment:
+  r_version: "4.3.1"
+  use_renv: true
+  renv_lockfile: "renv.lock"
