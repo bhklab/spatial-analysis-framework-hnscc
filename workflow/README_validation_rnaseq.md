@@ -2,70 +2,181 @@
 
 ## Purpose
 
-This directory contains **reusable code scripts** for:
+This directory provides **modular R scripts** implementing a **spatially informed gene signature analysis pipeline** for immunotherapy transcriptomic datasets.
 
-- Data processing pipelines
-- Analysis workflows
-- Utility functions
-- Automation tasks
+The workflow integrates:
 
-## Best Practices for Scripts
+- Rank-based single-sample gene signature scoring  
+- Centroid-based spatial projection  
+- Association testing with clinical outcomes  
+- Cross-cohort meta-analysis  
+- Signature correlation and clustering  
+- Publication-ready visualization  
 
-For maximum usability, scripts should:
+All analyses are modular and reproducible.
 
-- Include a detailed docstring/header explaining purpose, inputs, outputs
-- Contain inline comments for complex logic
-- Be modular and follow the single responsibility principle
-- Include proper error handling and logging
-- Have command-line interfaces when appropriate
+---
 
-## Git Synchronization
+## Key Capabilities
 
-Scripts **ARE tracked in Git** and represent the core reproducible components of your analysis. Ensure scripts:
+- Single-sample signature scoring (singscore, GSVA, ssGSEA, weighted mean)
+- Centroid-distance–based spatial signature scoring
+- Cox proportional hazards and logistic regression analyses
+- Pan-cancer and cancer-specific meta-analysis
+- Signature correlation and meta-correlation
+- Gene-overlap–based clustering with pathway enrichment
+- Automated generation of publication-ready figures
 
-- Are well-tested before committing
-- Have clear versioning (consider semantic versioning)
-- Include usage examples in comments or separate documentation
+---
 
-## Organization Recommendations
+# Modular Scripts (`workflow/external_validation_rnaseq/`)
 
-Consider organizing scripts by their function:
+The workflow is organized into eight modular components:
 
-```console
-/scripts/preprocessing/
-/scripts/analysis/
-/scripts/visualization/
-/scripts/utilities/
-```
+---
 
-## Data References
+## (1) `runProcData.R`
 
-When scripts access data:
+Prepares transcriptomic datasets for downstream analysis.
 
-- Use command-line arguments or configuration files for file paths
-- Document in `docs/data_sources.md` which scripts use which data sources
-- Consider using symbolic links for consistent references across environments
+**Tasks:**
+- Load `MultiAssayExperiment` objects  
+- Convert to `SummarizedExperiment`  
+- Normalize expression matrices  
+- Harmonize clinical variables  
+- Load and validate curated signature libraries  
 
-## Documentation Requirement
+---
 
-It is **highly recommended** to convert scripts to CLI tools using popular libraries
-like `click` or `typer`, which can make them more user-friendly and easier to document.
+## (2) `runSigScore.R`
 
-```console
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""
-script_name.py
-Usage: script_name.py [options] <input> <output>
+Computes gene signature scores.
 
-Arguments:
-    input     Description of input
-    output    Description of output
+**Implemented Methods:**
+- `singscore`
+- GSVA
+- ssGSEA
+- Weighted mean
+- Specific methods (e.g., IPS, COX-IS)
+- Spatial centroid-based scoring
 
-Options:
-    -h --help     Show this help
-    -v --verbose  Verbose output
-"""
-```
+### Spatially Informed Scoring
 
-Remember that well-documented scripts are essential for reproducible research and enable others to understand and build upon your work!
+For spatial signatures:
+
+1. Perform rank-based single-sample scoring  
+2. Project samples into a centroid-defined signature space  
+3. Compute Euclidean distances to two centroids  
+4. Define the final score as the distance to **Centroid 2**
+
+Centroid 2 represents a spatial tumor microenvironment state associated with favorable progression-free survival under immune checkpoint blockade (ICB).
+
+Lower distance indicates greater similarity to the favorable spatial state.
+
+---
+
+## (3) `runSigAssoc.R`
+
+Performs association analyses between signature scores and clinical outcomes.
+
+**Analyses:**
+- Cox proportional hazards models (PFS)
+- Logistic regression models (response)
+- Continuous predictors
+- Median-based dichotomized predictors
+
+---
+
+## (4) `runMeta.R`
+
+Performs cross-study meta-analysis of association results.
+
+**Features:**
+- Fixed-effects and random-effects models  
+- Pan-cancer integration  
+- Cancer-specific analysis  
+- Treatment-specific analysis  
+- Heterogeneity metrics (I², Q-test)  
+
+**Requirement:** ≥3 independent cohorts per feature.
+
+---
+
+## (5) `runCorr.R`
+
+Performs correlation and meta-correlation analysis of signature scores.
+
+**Includes:**
+- Pearson correlations per dataset  
+- Meta-correlation across studies  
+- Hierarchical clustering  
+- Heatmap generation  
+
+**Requirement:** ≥3 datasets per signature pair.
+
+---
+
+## (6) `runSigCluster.R`
+
+Clusters gene signatures based on shared-gene overlap.
+
+**Workflow:**
+1. Build signature–gene overlap matrix  
+2. Perform PCA  
+3. Apply affinity propagation clustering  
+4. Conduct KEGG enrichment analysis (Enrichr)  
+
+Includes overlap matrices, PCA plots, clustering heatmaps, and pathway enrichment tables.
+
+---
+
+## (7) `sigDistanceFunction.R`
+
+Implements centroid-based spatial distance scoring.
+
+**Functions:**
+- `compute_distances()` — Computes Euclidean distances to predefined centroids  
+- `geneSigNovel()` — Performs rank-based scoring and returns distance to Centroid 2  
+
+**Supported Input Formats:**
+- `SummarizedExperiment`
+- `MultiAssayExperiment`
+- matrix/data.frame (genes × samples)
+
+---
+
+## (8) `runVisualization.R`
+
+Generates publication-ready figures.
+
+**Figures include:**
+- Kaplan–Meier survival curves  
+- Boxplots (Responder vs Non-responder)  
+- Forest plots (logHR and logOR)  
+- Meta-analysis summary visualizations  
+
+
+---
+
+# Input Requirements
+
+Each dataset should provide:
+
+- A normalized gene expression matrix (e.g., log2(TPM + 1))  
+- Clinical variables:
+  - Progression-Free Survival (time and event)
+  - Binary response status  
+- Curated gene signature definitions  
+- Predefined centroid profiles (.rds files) for spatial signatures  
+
+---
+
+# Notes
+
+- PFS is administratively censored at 24 months.  
+- Median dichotomization requires ≥3 samples per group.  
+- Meta-analysis requires ≥3 independent cohorts.  
+- Correlation meta-analysis requires ≥3 datasets per signature pair.  
+
+---
+
