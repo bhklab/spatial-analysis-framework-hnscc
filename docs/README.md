@@ -1,9 +1,9 @@
 # Spatial Analysis HNSCC Framework
 
-**Authors:** [Gregoire Marret](https://github.com/gmarret), [Farnoosh Abbas Aghababazadeh](https://github.com/RibaA), [Jinsu An](https://github.com/Jinsuan-UofC)
+**Authors:** [Gregoire Marret](https://github.com/gmarret), [Jinsu An](https://github.com/Jinsuan-UofC), [Farnoosh Abbas Aghababazadeh](https://github.com/RibaA)
 
 
-**Contact:** [gregoire.marret@uhn.ca](gregoire.marret@uhn.ca), [farnoosh.abbasaghababazadeh@uhn.ca](farnoosh.abbasaghababazadeh@uhn.ca), [jinsu.an@ucalgary.ca](jinsu.an@ucalgary.ca)
+**Contact:** [gregoire.marret@uhn.ca](gregoire.marret@uhn.ca), [jinsu.an@ucalgary.ca](jinsu.an@ucalgary.ca), [farnoosh.abbasaghababazadeh@uhn.ca](farnoosh.abbasaghababazadeh@uhn.ca)
 
 **Description:** A Spatial Analysis Framework for Head and Neck Squamous Cell Carcinoma
 
