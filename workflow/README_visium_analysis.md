@@ -187,7 +187,7 @@ The following R packages (and versions) were used:
 - msigdbr (v25.1.1)
 - org.Hs.eg.db (v3.12.0)
 
-Additional dependencies are documented within each script.
+This workflow uses a reproducible environment managed via `pixi`.  
 
 ---
 
