@@ -1,4 +1,4 @@
-# Scripts Directory
+# Scripts Directory - External IO Validation RNAseq
 
 ## Purpose
 
