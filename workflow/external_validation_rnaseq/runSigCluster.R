@@ -199,7 +199,6 @@ dbs <- c( "KEGG_2016" )
 ## IO signatures
 cluster <- read.csv(file.path(dir_out, "clusters_IO_genes.csv"))
 GeneSig_list <- GeneSig_list[order(GeneSig_list)]
-GeneSig_list <- GeneSig_list[!GeneSig_list %in% c("CIN25_Carter.rda", "CIN70_Carter.rda") ]
 signature_name <- substr(GeneSig_list, 1, nchar(GeneSig_list) -4)
 
 clust <- sort( names( table( cluster$cluster )[ table( cluster$cluster ) > 1 ] ) )
