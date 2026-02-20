@@ -56,7 +56,6 @@ library(RColorBrewer)
 library(ggfortify)
 library(RColorBrewer)
 library(ggplot2)
-library(stringr)
 library(enrichR)
 
 ###########################################
