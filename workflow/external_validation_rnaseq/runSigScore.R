@@ -77,7 +77,7 @@ dir.output <- 'data/results/score'
 # load centroids
 ######################################################
 cent1 <- readRDS(file.path(dir.sig , 'centroid1_finalv2.rds'))
-cent2 <- readRDS(file.path(dir.sig , 'Centroid2_finalv2.rds'))
+cent2 <- readRDS(file.path(dir.sig , 'centroid2_finalv2.rds'))
 
 ####################################################################
 ## Load selected IO signature
