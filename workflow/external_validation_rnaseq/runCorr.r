@@ -307,8 +307,6 @@ ha <- HeatmapAnnotation(
 col_hclust <- hclust(dist(t(df), method = "euclidean"), method = "complete")
 row_hclust <- hclust(dist(t(df), method = "euclidean"), method = "complete")
 
-symmetric_matrix[upper.tri(symmetric_matrix)] <- NA
-
 # Combine the heatmap and the annotation
 
 pdf(file=file.path(dir.output, group, "ht_cor_sig.pdf"),
