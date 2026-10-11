@@ -104,5 +104,4 @@ Full documentation, including usage instructions, data setup, config templates, 
 
 Start by downloading and organizing the raw input datasets as described in [`data/rawdata/README.md`](https://github.com/bhklab/spatial-analysis-framework-hnscc/blob/main/data/rawdata/README.md).
 
-For data download and processing, please refer to the repository:  
-🔗 [https://github.com/bhklab/spatial-analysis-framework-hnscc?tab=readme-ov-file](https://github.com/bhklab/spatial-analysis-framework-hnscc?tab=readme-ov-file)
+
