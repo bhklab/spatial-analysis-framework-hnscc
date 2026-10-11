@@ -49,8 +49,9 @@ All analyses are implemented as modular, configurable scripts designed for trans
 
 Raw spatial transcriptomic sequencing data and de-identified clinical metadata are available under controlled access at the European Genome-phenome Archive (EGA):
 
-- **INSPIRE:** Study accession `EGAS00001003280`; dataset accession `EGAD50000003130`
-- **IO-KIN:** Study accession `EGAS50000002196`; dataset accession `EGAD50000003147`
+- **INSPIRE:** Study accession [EGAS00001003280](https://ega-archive.org/studies/EGAS00001003280); dataset accession [EGAD50000003130](https://ega-archive.org/datasets/EGAD50000003130)
+
+- **IO-KIN:** Study accession [EGAS50000002196](https://ega-archive.org/studies/EGAS50000002196); dataset accession [EGAD50000003147](https://ega-archive.org/datasets/EGAD50000003147)
 
 Access can be requested through EGA via the UHN Genomics Data Access Committee (`EGAC00001000912`), subject to a data access agreement.
 
