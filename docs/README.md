@@ -43,6 +43,27 @@ All analyses are implemented as modular, configurable scripts designed for trans
 
 ---
 
+## Data and Code Availability
+
+### Data Availability
+
+Raw spatial transcriptomic sequencing data and de-identified clinical metadata are available under controlled access at the European Genome-phenome Archive (EGA):
+
+- **INSPIRE:** Study accession `EGAS00001003280`; dataset accession `EGAD50000003130`
+- **IO-KIN:** Study accession `EGAS50000002196`; dataset accession `EGAD50000003147`
+
+Access can be requested through EGA via the UHN Genomics Data Access Committee (`EGAC00001000912`), subject to a data access agreement.
+
+### Code Availability
+
+The archived release of this code is available on Zenodo:
+
+[https://doi.org/10.5281/zenodo.22831977](https://doi.org/10.5281/zenodo.22831977)
+
+This GitHub repository contains the development version of the code.
+
+---
+
 ## Set Up
 
 ### Prerequisites
