@@ -54,7 +54,7 @@ Raw spatial transcriptomic sequencing data and de-identified clinical metadata a
 - **IO-KIN:** Study accession [EGAS50000002196](https://ega-archive.org/studies/EGAS50000002196) and [EGAD50000003147](https://ega-archive.org/datasets/EGAD50000003147)
 
 
-Access can be requested through EGA via the [UHN Genomics Data Access Committee (EGAC00001000912)](https://ega-archive.org/dacs/EGAC00001000912), subject to a data access agreement.
+Access can be requested through EGA via the UHN Genomics Data Access Committee [EGAC00001000912](https://ega-archive.org/dacs/EGAC00001000912), subject to a data access agreement.
 
 ### Code Availability
 
